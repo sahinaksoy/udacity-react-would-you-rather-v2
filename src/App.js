@@ -1,10 +1,11 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Button } from "reactstrap";
 
 function App() {
   return (
     <div className="App">
-      Welcome pool app
+      <Button>Welcome pool app</Button>
     </div>
   );
 }
