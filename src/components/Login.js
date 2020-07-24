@@ -6,30 +6,20 @@ import { getInitialData } from "../actions/shared";
 
 class Login extends Component {
   componentDidMount() {
-   this.props.getInitialData();
+    const { getInitialData } = this.props;
+    getInitialData();
   }
+
   render() {
-    console.log(this.props);
-    const friendOptions = [
-      {
-        key: "sarahedo",
-        text: "sarahedo",
-        value: "sarahedo",
-        image: { avatar: true, src: "../images/sarahedo.png" },
-      },
-      {
-        key: "tylermcginnis",
-        text: "tylermcginnis",
-        value: "tylermcginnis",
-        image: { avatar: true, src: "../images/tylermcginnis.png" },
-      },
-      {
-        key: "johndoe",
-        text: "johndoe",
-        value: "johndoe",
-        image: { avatar: true, src: "../images/johndoe.png" },
-      },
-    ];
+    const { users } = this.props;
+    const optionList = Object.values(users).map((user) => {
+      return {
+        key: user.id,
+        text: user.name,
+        value: user.id,
+        image: { avatar: true, src: user.avatarURL },
+      };
+    });
 
     return (
       <div
@@ -44,7 +34,7 @@ class Login extends Component {
             placeholder="Select Profile"
             fluid
             selection
-            options={friendOptions}
+            options={optionList}
           />
           <p></p>
           <Button primary>Login</Button>
