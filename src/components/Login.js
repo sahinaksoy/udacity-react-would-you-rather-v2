@@ -15,13 +15,16 @@ class Login extends Component {
   };
 
   handleOnSelectionChange = (e, { value }) => {
-    const { setAuthUser } = this.props;
-    setAuthUser(value);
+    this.setState({
+      selectedUser: value,
+    });
   };
 
   handleOnLoginClick = (e) => {
     e.preventDefault();
-    // TODO: setAuthUser func add
+    const { setAuthUser } = this.props;
+    const { selectedUser } = this.state;
+    setAuthUser(selectedUser);
   };
 
   render() {
@@ -52,7 +55,9 @@ class Login extends Component {
             onChange={this.handleOnSelectionChange}
           />
           <p></p>
-          <Button primary>Login</Button>
+          <Button primary onClick={this.handleOnLoginClick}>
+            Login
+          </Button>
         </Jumbotron>
       </div>
     );
