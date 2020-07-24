@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { Jumbotron } from "reactstrap";
 import { Dropdown, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { getInitialData } from "../actions/shared";
 
 class Login extends Component {
+  componentDidMount() {
+   this.props.getInitialData();
+  }
   render() {
+    console.log(this.props);
     const friendOptions = [
       {
         key: "sarahedo",
@@ -28,7 +34,7 @@ class Login extends Component {
     return (
       <div
         className="row"
-        style={{ maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}
+        style={{ maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}
       >
         <Jumbotron>
           <h1>Welcome to the Would You Rather App!</h1>
@@ -48,4 +54,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  users: state.users,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getInitialData: () => dispatch(getInitialData()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
