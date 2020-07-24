@@ -3,12 +3,26 @@ import { Jumbotron } from "reactstrap";
 import { Dropdown, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { getInitialData } from "../actions/shared";
+import { setAuthUser } from "../actions/authUser";
 
 class Login extends Component {
   componentDidMount() {
     const { getInitialData } = this.props;
     getInitialData();
   }
+  state = {
+    selectedUser: "",
+  };
+
+  handleOnSelectionChange = (e, { value }) => {
+    const { setAuthUser } = this.props;
+    setAuthUser(value);
+  };
+
+  handleOnLoginClick = (e) => {
+    e.preventDefault();
+    // TODO: setAuthUser func add
+  };
 
   render() {
     const { users } = this.props;
@@ -35,6 +49,7 @@ class Login extends Component {
             fluid
             selection
             options={optionList}
+            onChange={this.handleOnSelectionChange}
           />
           <p></p>
           <Button primary>Login</Button>
@@ -50,6 +65,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getInitialData: () => dispatch(getInitialData()),
+  setAuthUser: (id) => dispatch(setAuthUser(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
