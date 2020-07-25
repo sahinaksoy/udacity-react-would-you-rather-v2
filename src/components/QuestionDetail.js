@@ -2,10 +2,19 @@ import React, { Component } from "react";
 import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
 import { connect } from "react-redux";
 import { Button, Radio } from "semantic-ui-react";
+import { handleSaveQuestionAnswer } from "../actions/questions";
 
 class QuestionDetail extends Component {
   state = {};
   handleChange = (e, { value }) => this.setState({ value });
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { handleSaveQuestionAnswer, question, users } = this.props;
+    const author = users[question.author];
+    const answer = this.state.value;
+    handleSaveQuestionAnswer(author.id, question.id, answer);
+  };
 
   render() {
     const { question, users } = this.props;
@@ -41,7 +50,11 @@ class QuestionDetail extends Component {
                     />
                   </div>
                 </CardText>
-                <Button primary disabled={!this.state.value}>
+                <Button
+                  primary
+                  disabled={!this.state.value}
+                  onClick={this.handleSubmit}
+                >
                   Submit
                 </Button>
               </div>
@@ -57,5 +70,8 @@ const mapStateToProps = (state, { match }) => ({
   question: state.questions[match.params.questionid],
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  handleSaveQuestionAnswer: (userId, questionId, answer) =>
+    dispatch(handleSaveQuestionAnswer(userId, questionId, answer)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(QuestionDetail);

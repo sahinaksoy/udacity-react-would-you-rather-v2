@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Jumbotron } from "reactstrap";
 import { Dropdown, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { getInitialData } from "../actions/shared";
 import { setAuthUser } from "../actions/authUser";
 
 class Login extends Component {
