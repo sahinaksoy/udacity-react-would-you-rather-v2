@@ -6,10 +6,6 @@ import { getInitialData } from "../actions/shared";
 import { setAuthUser } from "../actions/authUser";
 
 class Login extends Component {
-  componentDidMount() {
-    const { getInitialData } = this.props;
-    getInitialData();
-  }
   state = {
     selectedUser: "",
   };
@@ -69,7 +65,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getInitialData: () => dispatch(getInitialData()),
   setAuthUser: (id) => dispatch(setAuthUser(id)),
 });
 
