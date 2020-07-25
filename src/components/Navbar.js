@@ -8,6 +8,8 @@ import {
   DropdownMenu,
   NavLink,
 } from "reactstrap";
+import { connect } from "react-redux";
+import { logOut } from "../actions/authUser";
 
 class Navbar extends Component {
   state = {
@@ -18,8 +20,16 @@ class Navbar extends Component {
       dropdownOpen: !this.state.dropdownOpen,
     });
   };
+
+  handleLogout = (e) => {
+    e.preventDefault();
+    const { logOut } = this.props;
+    logOut();
+  };
   render() {
     const { dropdownOpen } = this.state;
+    const { authUser, users } = this.props;
+    const userName = users[authUser].name;
     return (
       <Nav>
         <NavItem>
@@ -34,10 +44,12 @@ class Navbar extends Component {
 
         <Dropdown nav isOpen={dropdownOpen} toggle={this.toggle}>
           <DropdownToggle nav caret>
-            User Name
+            {userName}
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>LogOut</DropdownItem>
+            <DropdownItem onClick={this.handleLogout}>
+              LogOut
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Nav>
@@ -45,4 +57,13 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  authUser: state.authUser,
+  users: state.users,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logOut: () => dispatch(logOut()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
