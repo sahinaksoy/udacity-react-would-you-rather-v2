@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardText } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { Button, Radio } from "semantic-ui-react";
 
 class AnswerQuestion extends Component {
@@ -9,7 +9,7 @@ class AnswerQuestion extends Component {
     const { question, onSubmitClick } = this.props;
     return (
       <Card>
-        <CardText>
+        <CardBody>
           <Radio
             label={question.optionOne.text}
             name="radioGroup"
@@ -25,7 +25,7 @@ class AnswerQuestion extends Component {
             checked={this.state.value === "optionTwo"}
             onChange={this.handleChange}
           />
-        </CardText>
+        </CardBody>
         <Button
           primary
           disabled={!this.state.value}

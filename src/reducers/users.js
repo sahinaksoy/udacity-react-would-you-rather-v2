@@ -13,6 +13,7 @@ export default function users(state = initialState, action) {
       return {
         ...state,
         [userId]: {
+          ...state[userId],
           answers: {
             ...state[userId].answers,
             [questionId]: answer,

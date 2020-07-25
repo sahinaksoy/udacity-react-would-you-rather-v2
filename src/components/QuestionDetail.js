@@ -8,10 +8,10 @@ import QuestionResult from "./QuestionResult";
 
 class QuestionDetail extends Component {
   handleSubmit = (answer) => {
-    const { handleSaveQuestionAnswer, question, users } = this.props;
+    const { handleSaveQuestionAnswer, question, users, authUser } = this.props;
     const author = users[question.author];
 
-    handleSaveQuestionAnswer(author.id, question.id, answer);
+    handleSaveQuestionAnswer(authUser, question.id, answer);
   };
 
   render() {
@@ -23,22 +23,24 @@ class QuestionDetail extends Component {
         <Card>
           <CardHeader>{author.name} asks:</CardHeader>
           <CardBody>
-            <div className="row">
-              <div className="col-md-3">
-                <img src={author.avatarURL} style={{ width: 100 + "%" }} />
+            <section>
+              <div className="row">
+                <div className="col-md-3">
+                  <img src={author.avatarURL} style={{ width: 100 + "%" }} />
+                </div>
+                <div className="col-md-9">
+                  <CardTitle>Would you rather</CardTitle>
+                  {user.answers[question.id] == null ? (
+                    <AnswerQuestion
+                      question={question}
+                      onSubmitClick={this.handleSubmit}
+                    />
+                  ) : (
+                    <QuestionResult question={question} user={user} />
+                  )}
+                </div>
               </div>
-              <div className="col-md-9">
-                <CardTitle>Would you rather</CardTitle>
-                {user.answers[question.id] == null ? (
-                  <AnswerQuestion
-                    question={question}
-                    onSubmitClick={this.handleSubmit}
-                  />
-                ) : (
-                  <QuestionResult question={question} user={user} />
-                )}
-              </div>
-            </div>
+            </section>
           </CardBody>
         </Card>
       </div>

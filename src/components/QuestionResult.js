@@ -1,5 +1,5 @@
 import React, { Component, useReducer } from "react";
-import { Card, CardText } from "reactstrap";
+import { Card, CardBody } from "reactstrap";
 import { Progress } from "reactstrap";
 class QuestionResult extends Component {
   render() {
@@ -10,7 +10,7 @@ class QuestionResult extends Component {
     const userAnswer = user.answers[question.id];
     return (
       <Card>
-        <CardText>
+        <CardBody>
           <div className="text-center">{question.optionOne.text}</div>
           <Progress
             value={optionOneAnswerCount}
@@ -38,7 +38,7 @@ class QuestionResult extends Component {
             {optionTwoAnswerCount} of {totalAnswer}
             {userAnswer == "optionTwo" && <> (Your Vote)</>}
           </Progress>
-        </CardText>
+        </CardBody>
       </Card>
     );
   }

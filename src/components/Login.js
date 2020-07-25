@@ -49,7 +49,7 @@ class Login extends Component {
             options={optionList}
             onChange={this.handleOnSelectionChange}
           />
-          <p></p>
+          <br />
           <Button primary onClick={this.handleOnLoginClick}>
             Login
           </Button>

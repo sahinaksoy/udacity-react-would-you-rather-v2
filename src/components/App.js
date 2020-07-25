@@ -16,11 +16,11 @@ class App extends Component {
   render() {
     const { authUser } = this.props;
     return (
-      <div
-        className="container"
-        style={{ maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}
-      >
-        <Router>
+      <Router>
+        <div
+          className="container"
+          style={{ maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}
+        >
           {authUser == null ? (
             <Login />
           ) : (
@@ -35,8 +35,8 @@ class App extends Component {
               </Switch>
             </React.Fragment>
           )}
-        </Router>
-      </div>
+        </div>{" "}
+      </Router>
     );
   }
 }
