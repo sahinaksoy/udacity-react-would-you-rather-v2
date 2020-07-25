@@ -3,23 +3,21 @@ import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
 import { connect } from "react-redux";
 import { Button, Radio } from "semantic-ui-react";
 import { handleSaveQuestionAnswer } from "../actions/questions";
+import AnswerQuestion from "./AnswerQuestion";
+import QuestionResult from "./QuestionResult";
 
 class QuestionDetail extends Component {
-  state = {};
-  handleChange = (e, { value }) => this.setState({ value });
-
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (answer) => {
     const { handleSaveQuestionAnswer, question, users } = this.props;
     const author = users[question.author];
-    const answer = this.state.value;
+
     handleSaveQuestionAnswer(author.id, question.id, answer);
   };
 
   render() {
-    const { question, users } = this.props;
+    const { question, users, authUser } = this.props;
     const author = users[question.author];
-
+    const user = users[authUser];
     return (
       <div>
         <Card>
@@ -31,32 +29,14 @@ class QuestionDetail extends Component {
               </div>
               <div className="col-md-9">
                 <CardTitle>Would you rather</CardTitle>
-                <CardText>
-                  <div>
-                    <Radio
-                      label={question.optionOne.text}
-                      name="radioGroup"
-                      value="optionOne"
-                      checked={this.state.value === "optionOne"}
-                      onChange={this.handleChange}
-                    />
-                    <br />
-                    <Radio
-                      label={question.optionTwo.text}
-                      name="radioGroup"
-                      value="optionTwo"
-                      checked={this.state.value === "optionTwo"}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                </CardText>
-                <Button
-                  primary
-                  disabled={!this.state.value}
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
+                {user.answers[question.id] == null ? (
+                  <AnswerQuestion
+                    question={question}
+                    onSubmitClick={this.handleSubmit}
+                  />
+                ) : (
+                  <QuestionResult question={question} user={user} />
+                )}
               </div>
             </div>
           </CardBody>
@@ -68,6 +48,7 @@ class QuestionDetail extends Component {
 const mapStateToProps = (state, { match }) => ({
   users: state.users,
   question: state.questions[match.params.questionid],
+  authUser: state.authUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
