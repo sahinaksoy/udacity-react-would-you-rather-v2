@@ -15,10 +15,9 @@ class QuestionDetail extends Component {
   };
 
   render() {
-    const { question, users, authUser, contentType } = this.props;
+    const { question, users, authUser, contentType, answered } = this.props;
     const author = users[question.author];
     const user = users[authUser];
-
     return (
       <div>
         <Card>
@@ -42,7 +41,7 @@ class QuestionDetail extends Component {
                     ))}
 
                   {contentType == "teaser" && (
-                    <TeaserQuestion question={question} />
+                    <TeaserQuestion question={question} answered={answered} />
                   )}
                 </div>
               </div>

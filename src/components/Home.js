@@ -55,12 +55,14 @@ class Home extends Component {
                     <QuestionDetail
                       contentType="teaser"
                       questionId="6ni6ok3ym7mf1p33lnez"
+                      answered={true}
                     />
                   </li>
                   <li style={{ marginTop: 10 }}>
                     <QuestionDetail
                       contentType="teaser"
                       questionId="6ni6ok3ym7mf1p33lnez"
+                      answered={true}
                     />
                   </li>
                 </ul>
@@ -70,7 +72,22 @@ class Home extends Component {
           <TabPane tabId="2">
             <Row>
               <Col sm="12">
-                <h4>Answered</h4>
+                <ul style={{ listStyleType: "none" }}>
+                  <li style={{ marginTop: 10 }}>
+                    <QuestionDetail
+                      contentType="teaser"
+                      questionId="6ni6ok3ym7mf1p33lnez"
+                      answered={false}
+                    />
+                  </li>
+                  <li style={{ marginTop: 10 }}>
+                    <QuestionDetail
+                      contentType="teaser"
+                      questionId="6ni6ok3ym7mf1p33lnez"
+                      answered={false}
+                    />
+                  </li>
+                </ul>
               </Col>
             </Row>
           </TabPane>
