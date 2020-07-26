@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { connect } from "react-redux";
 import { logOut } from "../actions/authUser";
+import { NavLink as RRNavLink } from "react-router-dom";
 
 class Navbar extends Component {
   state = {
@@ -33,10 +34,14 @@ class Navbar extends Component {
     return (
       <Nav>
         <NavItem>
-          <NavLink href="#">Home</NavLink>
+          <NavLink tag={RRNavLink} exact to="/" activeClassName="active">
+            Home
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">New Pool</NavLink>
+          <NavLink tag={RRNavLink} exact to="/newpool" activeClassName="active">
+            New Pool
+          </NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="#">Leader Board</NavLink>
@@ -47,9 +52,7 @@ class Navbar extends Component {
             {userName}
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem onClick={this.handleLogout}>
-              LogOut
-            </DropdownItem>
+            <DropdownItem onClick={this.handleLogout}>LogOut</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Nav>

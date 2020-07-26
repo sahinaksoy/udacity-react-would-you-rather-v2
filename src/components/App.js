@@ -7,6 +7,7 @@ import { handleInitialData } from "../actions/shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import QuestionDetail from "./QuestionDetail";
+import NewQuestion from "./NewQuestion";
 
 class App extends Component {
   componentDidMount() {
@@ -28,6 +29,7 @@ class App extends Component {
               <Navbar />
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/newpool" component={NewQuestion} />
                 <Route
                   path="/question/:questionid"
                   component={QuestionDetail}
