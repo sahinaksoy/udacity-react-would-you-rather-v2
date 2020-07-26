@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
 import { connect } from "react-redux";
-import { Button, Radio } from "semantic-ui-react";
 import { handleSaveQuestionAnswer } from "../actions/questions";
 import AnswerQuestion from "./AnswerQuestion";
 import QuestionResult from "./QuestionResult";
+import TeaserQuestion from "./TeaserQuestion";
 
 class QuestionDetail extends Component {
   handleSubmit = (answer) => {
@@ -15,9 +15,10 @@ class QuestionDetail extends Component {
   };
 
   render() {
-    const { question, users, authUser } = this.props;
+    const { question, users, authUser, contentType } = this.props;
     const author = users[question.author];
     const user = users[authUser];
+
     return (
       <div>
         <Card>
@@ -30,13 +31,18 @@ class QuestionDetail extends Component {
                 </div>
                 <div className="col-md-9">
                   <CardTitle>Would you rather</CardTitle>
-                  {user.answers[question.id] == null ? (
-                    <AnswerQuestion
-                      question={question}
-                      onSubmitClick={this.handleSubmit}
-                    />
-                  ) : (
-                    <QuestionResult question={question} user={user} />
+                  {contentType == null &&
+                    (user.answers[question.id] == null ? (
+                      <AnswerQuestion
+                        question={question}
+                        onSubmitClick={this.handleSubmit}
+                      />
+                    ) : (
+                      <QuestionResult question={question} user={user} />
+                    ))}
+
+                  {contentType == "teaser" && (
+                    <TeaserQuestion question={question} />
                   )}
                 </div>
               </div>
@@ -47,11 +53,16 @@ class QuestionDetail extends Component {
     );
   }
 }
-const mapStateToProps = (state, { match }) => ({
-  users: state.users,
-  question: state.questions[match.params.questionid],
-  authUser: state.authUser,
-});
+const mapStateToProps = (state, { match, questionId }) => {
+  if (questionId == null && match != null) {
+    questionId = match.params.questionid;
+  }
+  return {
+    users: state.users,
+    question: state.questions[questionId],
+    authUser: state.authUser,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   handleSaveQuestionAnswer: (userId, questionId, answer) =>
