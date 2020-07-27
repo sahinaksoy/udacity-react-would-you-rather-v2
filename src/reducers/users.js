@@ -1,4 +1,8 @@
-import { RECEIVE_USERS, SAVE_ANSWER_TO_USER } from "../actions/users";
+import {
+  RECEIVE_USERS,
+  SAVE_ANSWER_TO_USER,
+  SAVE_QUESTION_TO_USER,
+} from "../actions/users";
 const initialState = {};
 
 export default function users(state = initialState, action) {
@@ -18,6 +22,16 @@ export default function users(state = initialState, action) {
             ...state[userId].answers,
             [questionId]: answer,
           },
+        },
+      };
+    }
+    case SAVE_QUESTION_TO_USER: {
+      const { id, author } = action.payload;
+      return {
+        ...state,
+        [author]: {
+          ...state[author],
+          questions: state[author].questions.concat(id),
         },
       };
     }
