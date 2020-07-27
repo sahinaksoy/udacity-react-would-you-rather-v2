@@ -38,7 +38,7 @@ function saveQuestion(question) {
   };
 }
 
-export function saveQuestion(optionOne, optionTwo, author) {
+export function handleSaveQuestion(optionOne, optionTwo, author) {
   const question = {
     optionOneText: optionOne,
     optionTwoText: optionTwo,

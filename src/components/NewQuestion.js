@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Input,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Input } from "reactstrap";
 import { Button } from "semantic-ui-react";
-
+import { handleSaveQuestion } from "../actions/questions";
+import { connect } from "react-redux";
 class NewQuestion extends Component {
   state = {
     optionOne: "",
@@ -15,12 +10,26 @@ class NewQuestion extends Component {
   };
 
   handleChange = (e) => {
-    
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value,
     });
   };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { authUser, handleSaveQuestion } = this.props;
+    const { optionOne, optionTwo } = this.state;
+    if (optionOne == optionTwo) {
+      alert("Please type different option!");
+    } else {
+      handleSaveQuestion(optionOne, optionTwo, authUser);
+      this.setState({
+        optionOne: "",
+        optionTwo: "",
+      });
+    }
+  };
   render() {
+    const { optionOne, optionTwo } = this.state;
     return (
       <section style={{ marginTop: 15 }}>
         <Card>
@@ -33,6 +42,7 @@ class NewQuestion extends Component {
               id="optionOne"
               placeholder="Type option one"
               onChange={this.handleChange}
+              value={optionOne}
             />
             <hr />
             <Input
@@ -41,6 +51,7 @@ class NewQuestion extends Component {
               id="optionTwo"
               placeholder="Type option two"
               onChange={this.handleChange}
+              value={optionTwo}
             />
             <br />
             <Button
@@ -48,10 +59,7 @@ class NewQuestion extends Component {
               disabled={
                 this.state.optionOne == "" || this.state.optionTwo == ""
               }
-              onClick={() => {
-                //TODO: handle add new question
-                console.log(this.state);
-              }}
+              onClick={this.handleSubmit}
             >
               Submit
             </Button>
@@ -61,5 +69,15 @@ class NewQuestion extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    authUser: state.authUser,
+  };
+};
 
-export default NewQuestion;
+const mapDispatchToProps = (dispatch) => ({
+  handleSaveQuestion: (optionOne, optionTwo, author) =>
+    dispatch(handleSaveQuestion(optionOne, optionTwo, author)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion);
