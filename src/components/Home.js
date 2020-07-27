@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import QuestionDetail from "./QuestionDetail";
+import { connect } from "react-redux";
 
 class Home extends Component {
   state = {
@@ -22,6 +23,7 @@ class Home extends Component {
 
   render() {
     const { activeTab } = this.state;
+    const { unAnsweredQuestions, answeredQuestions } = this.props;
     return (
       <section style={{ marginTop: 15 }}>
         <Nav tabs>
@@ -51,20 +53,15 @@ class Home extends Component {
             <Row>
               <Col sm="12">
                 <ul style={{ listStyleType: "none" }}>
-                  <li style={{ marginTop: 10 }}>
-                    <QuestionDetail
-                      contentType="teaser"
-                      questionId="6ni6ok3ym7mf1p33lnez"
-                      answered={true}
-                    />
-                  </li>
-                  <li style={{ marginTop: 10 }}>
-                    <QuestionDetail
-                      contentType="teaser"
-                      questionId="6ni6ok3ym7mf1p33lnez"
-                      answered={true}
-                    />
-                  </li>
+                  {unAnsweredQuestions.map((question) => (
+                    <li key={question.id} style={{ marginTop: 10 }}>
+                      <QuestionDetail
+                        contentType="teaser"
+                        questionId={question.id}
+                        answered={true}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </Col>
             </Row>
@@ -73,20 +70,15 @@ class Home extends Component {
             <Row>
               <Col sm="12">
                 <ul style={{ listStyleType: "none" }}>
-                  <li style={{ marginTop: 10 }}>
-                    <QuestionDetail
-                      contentType="teaser"
-                      questionId="6ni6ok3ym7mf1p33lnez"
-                      answered={false}
-                    />
-                  </li>
-                  <li style={{ marginTop: 10 }}>
-                    <QuestionDetail
-                      contentType="teaser"
-                      questionId="6ni6ok3ym7mf1p33lnez"
-                      answered={false}
-                    />
-                  </li>
+                  {answeredQuestions.map((question) => (
+                    <li key={question.id} style={{ marginTop: 10 }}>
+                      <QuestionDetail
+                        contentType="teaser"
+                        questionId={question.id}
+                        answered={false}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </Col>
             </Row>
@@ -97,4 +89,19 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+  const { authUser, users, questions } = state;
+  const answeredIds = Object.keys(users[authUser].answers);
+  const unAnsweredQuestions = Object.values(questions)
+    .filter((question) => !answeredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
+  const answeredQuestions = Object.values(questions)
+    .filter((question) => answeredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
+  return {
+    unAnsweredQuestions,
+    answeredQuestions,
+  };
+}
+
+export default connect(mapStateToProps)(Home);
