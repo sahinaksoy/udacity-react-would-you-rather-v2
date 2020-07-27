@@ -29,7 +29,7 @@ class App extends Component {
               <Navbar />
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/newpool" component={NewQuestion} />
+                <Route exact path="/add" component={NewQuestion} />
                 <Route
                   path="/question/:questionid"
                   component={QuestionDetail}
