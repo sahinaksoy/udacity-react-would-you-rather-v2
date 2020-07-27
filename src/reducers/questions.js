@@ -1,6 +1,7 @@
 import {
   RECEIVE_QUESTIONS,
   SAVE_ANSWER_TO_QUESTION,
+  SAVE_QUESTION,
 } from "../actions/questions";
 
 const initialState = {};
@@ -24,6 +25,12 @@ export default function questions(state = initialState, action) {
         },
       };
     }
+    case SAVE_QUESTION:
+      const { question } = action.payload;
+      return {
+        ...state,
+        [question.id]: question,
+      };
     default:
       return state;
   }
