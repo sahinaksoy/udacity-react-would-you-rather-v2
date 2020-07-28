@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardBody } from "reactstrap";
-import { Button, Radio } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 
 class TeaserQuestion extends Component {

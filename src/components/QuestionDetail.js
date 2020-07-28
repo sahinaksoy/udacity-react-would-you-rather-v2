@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 import { connect } from "react-redux";
 import { handleSaveQuestionAnswer } from "../actions/questions";
 import AnswerQuestion from "./AnswerQuestion";
 import QuestionResult from "./QuestionResult";
 import TeaserQuestion from "./TeaserQuestion";
+import { Redirect } from "react-router-dom";
 
 class QuestionDetail extends Component {
   handleSubmit = (answer) => {
@@ -15,9 +16,20 @@ class QuestionDetail extends Component {
   };
 
   render() {
-    const { question, users, authUser, contentType, answered } = this.props;
+    const {
+      question,
+      users,
+      authUser,
+      contentType,
+      answered,
+      notFound,
+    } = this.props;
+    if (notFound) {
+      return <Redirect to="/notfound" />;
+    }
     const author = users[question.author];
     const user = users[authUser];
+
     return (
       <div>
         <Card>
@@ -56,10 +68,12 @@ const mapStateToProps = (state, { match, questionId }) => {
   if (questionId == null && match != null) {
     questionId = match.params.questionid;
   }
+  const question = state.questions[questionId];
   return {
     users: state.users,
-    question: state.questions[questionId],
+    question,
     authUser: state.authUser,
+    notFound: question == null,
   };
 };
 

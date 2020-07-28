@@ -89,7 +89,7 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   const { authUser, users, questions } = state;
   const answeredIds = Object.keys(users[authUser].answers);
   const unAnsweredQuestions = Object.values(questions)
@@ -102,6 +102,6 @@ function mapStateToProps(state) {
     unAnsweredQuestions,
     answeredQuestions,
   };
-}
+};
 
 export default connect(mapStateToProps)(Home);

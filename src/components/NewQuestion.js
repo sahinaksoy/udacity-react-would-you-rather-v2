@@ -3,6 +3,8 @@ import { Card, CardHeader, CardBody, CardTitle, Input } from "reactstrap";
 import { Button } from "semantic-ui-react";
 import { handleSaveQuestion } from "../actions/questions";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
 class NewQuestion extends Component {
   state = {
     optionOne: "",
@@ -25,11 +27,15 @@ class NewQuestion extends Component {
       this.setState({
         optionOne: "",
         optionTwo: "",
+        goHome: true,
       });
     }
   };
   render() {
-    const { optionOne, optionTwo } = this.state;
+    const { optionOne, optionTwo, goHome } = this.state;
+    if (goHome) {
+      return <Redirect to="/" />;
+    }
     return (
       <section style={{ marginTop: 15 }}>
         <Card>

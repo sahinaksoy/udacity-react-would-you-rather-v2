@@ -22,7 +22,7 @@ class Leaderboard extends Component {
               </thead>
               <tbody>
                 {leaderBoard.map((user, index) => (
-                  <tr>
+                  <tr key={index}>
                     <th scope="row">{++index}</th>
                     <td>
                       {<img src={user.avatarURL} style={{ width: 100 }} />}
