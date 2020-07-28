@@ -1,3 +1,7 @@
+# "Would you reather" app
+
+Live preview address [here](https://udacity-react-would-you-rather-v2.vercel.app/).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
