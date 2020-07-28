@@ -19,6 +19,10 @@ class Login extends Component {
     e.preventDefault();
     const { setAuthUser } = this.props;
     const { selectedUser } = this.state;
+    if (selectedUser == "") {
+      alert("Please select user!");
+      return;
+    }
     setAuthUser(selectedUser);
   };
 
