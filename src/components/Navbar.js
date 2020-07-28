@@ -39,12 +39,12 @@ class Navbar extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={RRNavLink} exact to="/newpool" activeClassName="active">
+          <NavLink tag={RRNavLink} exact to="/add" activeClassName="active">
             New Pool
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Leader Board</NavLink>
+          <NavLink tag={RRNavLink} exact to="/leaderboard"  activeClassName="active">Leader Board</NavLink>
         </NavItem>
 
         <Dropdown nav isOpen={dropdownOpen} toggle={this.toggle}>

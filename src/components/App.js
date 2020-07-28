@@ -8,7 +8,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import QuestionDetail from "./QuestionDetail";
 import NewQuestion from "./NewQuestion";
-
+import Leaderboard from "./Leaderboard";
+import NotFound from "./NotFound";
 class App extends Component {
   componentDidMount() {
     const { handleInitialData } = this.props;
@@ -34,6 +35,8 @@ class App extends Component {
                   path="/question/:questionid"
                   component={QuestionDetail}
                 />
+                <Route exact path="/leaderboard" component={Leaderboard} />
+                <Route component={NotFound} />
               </Switch>
             </React.Fragment>
           )}
